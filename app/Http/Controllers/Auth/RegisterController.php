@@ -9,6 +9,11 @@ use App\Models\User;
 
 class RegisterController extends Controller {
 
+    function __construct()
+    {
+      $this->middleware('guest');
+    }
+
     public function index() {
       return view('auth.register');
     }
