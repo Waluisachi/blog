@@ -3,29 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
   public function index()
   {
-    return view('posts.index');
+      $posts = Post::paginate(20);
+    return view('posts.index', ['posts' => $posts]);
   }
 
   public function submit(Request $request)
   {
       $this->validate($request, [
-        'data' => 'require'
+        'body' => 'required'
       ]);
 
-      Post::create([
-        'user_id' => auth()->id(),
+      $request->user()->posts()->create([
         'body' => $request->body
       ]);
-      auth()->user()->posts()->create();
+
+      return back();
   }
 
-  public function indetx()
-  {
-
-  }
 }
