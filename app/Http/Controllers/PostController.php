@@ -9,7 +9,7 @@ class PostController extends Controller
 {
   public function index()
   {
-      $posts = Post::paginate(20);
+      $posts = Post::paginate(5);
     return view('posts.index', ['posts' => $posts]);
   }
 
@@ -24,6 +24,32 @@ class PostController extends Controller
       ]);
 
       return back();
+  }
+
+  public function createPost() {
+    return view('posts.create');
+  }
+
+
+  public function addPost(Request $request) {
+    $this->validate($request, [
+      'title' => 'required',
+      'image' => 'required|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      'body' => 'required'
+    ]);
+
+    $image = $request->file('image');
+    $imagename = time().'.'.$image->getClientOriginalExtension();
+    $destinationPath = public_path('/images');
+    $image->move($destinationPath, $imagename);
+
+    $request->user()->posts()->create([
+      'title' => $request->title,
+      'image' => $imagename,
+      'body'  => $request->body
+    ]);
+
+    return back();
   }
 
 }

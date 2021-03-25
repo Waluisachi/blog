@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\PostLikeController ;
 
 
 
@@ -43,4 +43,8 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
 Route::post('/posts', [PostController::class, 'submit']);
 
-Route::post('/posts/{id}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
+Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
+
+Route::get('/posts/create', [PostController::class, 'createPost'])->name('createPost');
+
+Route::post('/posts/create', [PostController::class, 'addPost']);
