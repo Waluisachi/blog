@@ -16,11 +16,11 @@
           <a href="{{ route('dashboard')}}" class="p-3">Dashboard</a>
         </li>
         <li>
-          <a href="{{ route('posts')}}" class="p-3">Posts</a>
+          <a href="{{ route('posts')}}" class="p-3">Add Posts</a>
         </li>
-        <li>
+        <!-- <li>
           <a href="{{ route('createPost')}}" class="p-3">Create Posts</a>
-        </li>
+        </li> -->
       </ul>
 
       <ul class="flex items-center">

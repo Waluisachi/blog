@@ -9,7 +9,7 @@ class PostController extends Controller
 {
   public function index()
   {
-      $posts = Post::paginate(5);
+      $posts = Post::latest()->with(['user', 'likes'])->paginate(5);
     return view('posts.index', ['posts' => $posts]);
   }
 
@@ -23,7 +23,15 @@ class PostController extends Controller
         'body' => $request->body
       ]);
 
-      return back();
+      return back()->with('status', "Post Uploaded.");
+  }
+
+  public function destroy(Post $post)  {
+    if (!$post->ownedBy(auth()->user())) {
+      dd("No");
+    }
+    $post->delete();
+    return back();
   }
 
   public function createPost() {
